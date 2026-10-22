@@ -1,0 +1,36 @@
+name = "LebesgueCover"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["LebesgueCover"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+autoImplicit = false
+weak.linter.style.header = false
+
+# Lower bound 0.8366 for Lebesgue's universal covering problem.
+# Toolchain leanprover/lean4:v4.35.0-rc3; Mathlib at tag v4.35.0-rc3 (commit c55e6e786f49, see lake-manifest.json).
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+[[lean_lib]]
+name = "LebesgueCover"
+globs = ["LebesgueCover.+"]
+
+# The fast leaf checker and tree walker (core Lean only), compiled to native code so that `native_decide` in the
+# certificate shard modules runs compiled code instead of the IR interpreter.
+[[lean_lib]]
+name = "LebFast"
+globs = ["LebFast", "LebFast.+"]
+precompileModules = true
+
+[[lean_exe]]
+name = "heurtest"
+root = "tools.HeurTest"
+
+[[lean_exe]]
+name = "leafbench"
+root = "tools.LeafBench"
